@@ -1,24 +1,26 @@
 package br.com.Saint_Marry_Hospital.ProjetoClinica.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
-public class Usuarios {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idUsuarios;
-    private String login;
+    @NotBlank(message = "O login é obrigatório")
+    @Column(unique = true)
+    private String email;
+    @NotBlank(message = "A senha é obrigatória")
+    @Column(unique = true)
     private String senha;
 
-    public Usuarios() {}
+    public Usuario() {}
 
-    public Usuarios(Integer idUsuarios, String login, String senha) {
+    public Usuario(Integer idUsuarios, String email, String senha) {
         this.idUsuarios = idUsuarios;
-        this.login = login;
+        this.email = email;
         this.senha = senha;
     }
 
@@ -30,12 +32,12 @@ public class Usuarios {
         this.idUsuarios = idUsuarios;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSenha() {

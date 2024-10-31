@@ -13,14 +13,12 @@ public class Paciente {
     private Integer idPaciente;
     private String nome;
     private String email;
-    private String senha;
     private String cpf;
 
     public Paciente(Integer idPaciente, String nome, String email, String senha, String cpf) {
         this.idPaciente = idPaciente;
         this.nome = nome;
         this.email = email;
-        this.senha = senha;
         this.cpf = cpf;
     }
 
@@ -48,14 +46,6 @@ public class Paciente {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public String getCpf() {
