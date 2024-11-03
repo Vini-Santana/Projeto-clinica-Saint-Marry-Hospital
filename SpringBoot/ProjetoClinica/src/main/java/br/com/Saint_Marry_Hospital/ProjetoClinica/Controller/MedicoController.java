@@ -1,75 +1,72 @@
 package br.com.Saint_Marry_Hospital.ProjetoClinica.Controller;
 
 import br.com.Saint_Marry_Hospital.ProjetoClinica.ApiResponse;
-import br.com.Saint_Marry_Hospital.ProjetoClinica.Entities.Paciente;
-import br.com.Saint_Marry_Hospital.ProjetoClinica.Entities.PerfilDeAcesso;
-import br.com.Saint_Marry_Hospital.ProjetoClinica.Entities.Usuario;
+import br.com.Saint_Marry_Hospital.ProjetoClinica.Entities.*;
+import br.com.Saint_Marry_Hospital.ProjetoClinica.Repository.MedicoRepository;
 import br.com.Saint_Marry_Hospital.ProjetoClinica.Repository.PacienteRepository;
 import br.com.Saint_Marry_Hospital.ProjetoClinica.Repository.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-
 @RestController
-@RequestMapping(path="/paciente")
-public class PacienteController {
+@RequestMapping(path="/medico")
+public class MedicoController {
 
     @Autowired
-    private PacienteRepository pacienteRepository;
+    private MedicoRepository medicoRepository;
 
     @Autowired
     private UsuariosRepository usuariosRepository;
 
-    //Cria apenas um Paciente
-//    @PostMapping(path="/createPaciente")
-//    public @ResponseBody ApiResponse createPaciente (@RequestParam String nome
-//            , @RequestParam String email, @RequestParam String cpf
-//            , @RequestParam Usuario usuario) {
+//    @PostMapping(path="/createMedico")
+//    public @ResponseBody ApiResponse createMedico (@RequestParam String nome
+//            , @RequestParam String email, @RequestParam Usuario usuario
+//            , @RequestParam Especialidade especialidade) {
+//
 //        try {
-//            Paciente n = new Paciente();
+//            Medico n = new Medico();
 //            n.setNome(nome);
 //            n.setEmail(email);
-//            n.setCpf(cpf);
+//            n.setEspecialidade(especialidade);
 //            n.setUsuario(usuario);
-//            pacienteRepository.save(n);
-//            return new ApiResponse(1, "Paciente criado com sucesso!");
+//            medicoRepository.save(n);
+//            return new ApiResponse(1, "Medico criado com sucesso!");
 //        }catch (DataIntegrityViolationException e){
 //            System.out.println(e.getMessage());
 //            return new ApiResponse(0, e.getLocalizedMessage());
 //        }
 //    }
 
-    //Este serviço cria Um Usuário e já refencia este à um novo paciente
-    @PostMapping(path="/createPacienteUsuario")
-    public @ResponseBody ApiResponse createPaciente (@RequestParam String nome
-            , @RequestParam String email, @RequestParam String cpf
+    @PostMapping(path="/createMedicoUsuario")
+    public @ResponseBody ApiResponse createMedico (@RequestParam String nome
+            , @RequestParam String email, @RequestParam Especialidade especialidade
             , @RequestParam String senha, @RequestParam PerfilDeAcesso perfilDeAcesso) {
+
         try {
+
             Usuario u = new Usuario();
             u.setSenha(senha);
             u.setEmail(email);
             u.setPerfilDeAcesso(perfilDeAcesso);
             usuariosRepository.save(u);
 
-            Paciente n = new Paciente();
+            Medico n = new Medico();
             n.setNome(nome);
             n.setEmail(email);
-            n.setCpf(cpf);
+            n.setEspecialidade(especialidade);
             n.setUsuario(u);
-            pacienteRepository.save(n);
-
-            return new ApiResponse(1, "Paciente e Usuário criado com sucesso!");
+            medicoRepository.save(n);
+            return new ApiResponse(1, "Medico criado com sucesso!");
         }catch (DataIntegrityViolationException e){
             System.out.println(e.getMessage());
             return new ApiResponse(0, e.getLocalizedMessage());
         }
     }
 
-    @DeleteMapping(path="/deletePaciente")
+    @DeleteMapping(path="/deleteMedico")
     public @ResponseBody ApiResponse deletePaciente (@RequestParam Integer id) {
-        pacienteRepository.deleteById(id);
+        medicoRepository.deleteById(id);
         return new ApiResponse(1, "Paciente deletado com sucesso!");
     }
 }

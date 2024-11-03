@@ -7,21 +7,29 @@ import jakarta.validation.constraints.NotBlank;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique = true)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "usuario_seq", allocationSize = 1)
     private Integer idUsuarios;
-    @NotBlank(message = "O login é obrigatório")
+
+    @NotBlank(message = "O email é obrigatório")
     @Column(unique = true)
     private String email;
+
     @NotBlank(message = "A senha é obrigatória")
-    @Column(unique = true)
     private String senha;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_idPerfilDeAcesso", nullable = false)
+    private PerfilDeAcesso perfilDeAcesso;
 
     public Usuario() {}
 
-    public Usuario(Integer idUsuarios, String email, String senha) {
+    public Usuario(Integer idUsuarios, String email, String senha, PerfilDeAcesso perfilDeAcesso) {
         this.idUsuarios = idUsuarios;
         this.email = email;
         this.senha = senha;
+        this.perfilDeAcesso = perfilDeAcesso;
     }
 
     public Integer getIdUsuarios() {
@@ -32,19 +40,27 @@ public class Usuario {
         this.idUsuarios = idUsuarios;
     }
 
-    public String getEmail() {
+    public @NotBlank(message = "O email é obrigatório") String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(@NotBlank(message = "O email é obrigatório") String email) {
         this.email = email;
     }
 
-    public String getSenha() {
+    public @NotBlank(message = "A senha é obrigatória") String getSenha() {
         return senha;
     }
 
-    public void setSenha(String senha) {
+    public void setSenha(@NotBlank(message = "A senha é obrigatória") String senha) {
         this.senha = senha;
+    }
+
+    public PerfilDeAcesso getPerfilDeAcesso() {
+        return perfilDeAcesso;
+    }
+
+    public void setPerfilDeAcesso(PerfilDeAcesso perfilDeAcesso) {
+        this.perfilDeAcesso = perfilDeAcesso;
     }
 }

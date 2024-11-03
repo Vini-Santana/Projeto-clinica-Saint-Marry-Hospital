@@ -1,25 +1,37 @@
 package br.com.Saint_Marry_Hospital.ProjetoClinica.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Paciente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "paciente_seq", allocationSize = 1)
     private Integer idPaciente;
+
+    @NotBlank(message = "O nome é obrigatório")
     private String nome;
+
+    @NotBlank(message = "O email é obrigatório")
+    @Column(unique = true)
     private String email;
+
+    @NotBlank(message = "O cpf é obrigatório")
+    @Column(unique = true)
     private String cpf;
 
-    public Paciente(Integer idPaciente, String nome, String email, String senha, String cpf) {
-        this.idPaciente = idPaciente;
+    @OneToOne
+    @JoinColumn(name = "fk_idUsuario", nullable = false, unique = true)
+    private Usuario usuario;
+
+
+    public Paciente(String nome, String email, String cpf, Usuario usuario, PerfilDeAcesso perfilDeAcesso) {
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
+        this.usuario = usuario;
     }
 
     public Paciente(){ }
@@ -32,27 +44,36 @@ public class Paciente {
         this.idPaciente = idPaciente;
     }
 
-    public String getNome() {
+    public @NotBlank(message = "O nome é obrigatório") String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(@NotBlank(message = "O nome é obrigatório") String nome) {
         this.nome = nome;
     }
 
-    public String getEmail() {
+    public @NotBlank(message = "O email é obrigatório") String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(@NotBlank(message = "O email é obrigatório") String email) {
         this.email = email;
     }
 
-    public String getCpf() {
+    public @NotBlank(message = "O cpf é obrigatório") String getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(@NotBlank(message = "O cpf é obrigatório") String cpf) {
         this.cpf = cpf;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario (Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 }

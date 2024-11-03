@@ -1,17 +1,19 @@
 package br.com.Saint_Marry_Hospital.ProjetoClinica.Controller;
 
 import br.com.Saint_Marry_Hospital.ProjetoClinica.ApiResponse;
+import br.com.Saint_Marry_Hospital.ProjetoClinica.Entities.PerfilDeAcesso;
 import br.com.Saint_Marry_Hospital.ProjetoClinica.Entities.Usuario;
 import br.com.Saint_Marry_Hospital.ProjetoClinica.Repository.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.TransactionSystemException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path="/login")
+@RequestMapping(path="/usuario")
 public class UsuariosControler {
 
     @Autowired
@@ -19,24 +21,25 @@ public class UsuariosControler {
 
     @PostMapping(path="/createUsuario")
     public @ResponseBody ApiResponse  createUsuario (@RequestParam String email
-            , @RequestParam String senha) {
+            , @RequestParam String senha, @RequestParam PerfilDeAcesso perfilDeAcesso) {
 
         try {
             Usuario n = new Usuario();
             n.setSenha(senha);
             n.setEmail(email);
+            n.setPerfilDeAcesso(perfilDeAcesso);
             usuariosRepository.save(n);
             return new ApiResponse(1, "Usuário criado com sucesso!");
         }catch (TransactionSystemException e){
-            System.out.println("Login e senha devem ser preenchidos: "+ e.getClass());
-            return new ApiResponse(0, "Login e senha devem ser preenchidos: ");
+            System.out.println("Email e senha devem ser preenchidos: "+ e.getMessage());
+            return new ApiResponse(0, "Email e senha devem ser preenchidos: ");
         }catch (DataIntegrityViolationException e){
             System.out.println("Usuário já existe: "+ e.getClass());
-            return new ApiResponse(0, "Usuário já existe ");
+            return new ApiResponse(2, "Usuário já existe ");
         }
     }
 
-    @PostMapping(path="/validaLogin")
+    @PostMapping(path="/validaUsuario")
     public @ResponseBody ApiResponse validaLogin (@RequestParam String email
             , @RequestParam String senha) {
 
@@ -58,7 +61,7 @@ public class UsuariosControler {
             }
         }
         // Login não encontrado
-        return new ApiResponse(0, "Usuário ou senha inválidos");
+        return new ApiResponse(0, "Usuário ou senha incorretos");
     }
 
     @GetMapping(path="/")

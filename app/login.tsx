@@ -6,9 +6,10 @@ export default function Login() {
   const [senha, setSenha] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
 
+  //ESSE MÉTODO DEVE FICAR NA TELA CRIAÇÃO DE USUÁRIO
   const createUsuario = async () => { //USAR ESSE MÉTODONA TELA DE CRIAR USUÁRIO/PACIENTE
     try {
-      const response = await fetch(`http://192.168.15.7:8080/login/createUsuario?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`, {
+      const response = await fetch(`http://172.19.10.147:8080/login/createUsuario?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`, {
         
         method: "POST",
         headers: {
@@ -16,7 +17,7 @@ export default function Login() {
         },
       });
       
-      const data = await response.json();
+      const data = await response.json(); //Resposta da requisição
       if (data.code === 1) {
         setResponseMessage("Cadastro Efetuado com sucesso");
       } else {
@@ -30,7 +31,7 @@ export default function Login() {
 
   const validaLogin = async () => {
     try {
-      const response = await fetch(`http://192.168.15.7:8080/login/validaLogin?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`, {
+      const response = await fetch(`http://172.19.10.147:8080/login/validaLogin?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`, {
         
         method: "POST",
         headers: {
@@ -77,7 +78,7 @@ export default function Login() {
 
       />
 
-      <TouchableOpacity style={styles.SignInButton} onPress={createUsuario} >
+      <TouchableOpacity style={styles.SignInButton} onPress={validaLogin} >
         <Text style={styles.SignInButtonText}>Entrar</Text>
       </TouchableOpacity>
 
