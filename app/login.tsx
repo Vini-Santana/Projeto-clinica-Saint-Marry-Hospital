@@ -10,7 +10,7 @@ export default function Login() {
 
   const createUsuario = async () => {
     try {
-      const response = await fetch(`http://192.168.1.203:8080/login/createUsuario?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`, {
+      const response = await fetch(`http://172.19.12.87:8080/login/createUsuario?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export default function Login() {
 
   const validaLogin = async () => {
     try {
-      const response = await fetch(`http://192.168.1.203:8080/login/validaLogin?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`, {
+      const response = await fetch(`http://172.19.12.87:8080/login/validaLogin?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -87,53 +87,64 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     marginTop: 50,
+    borderRadius: 75,  // Torna a imagem redonda
   },
   title: {
     fontSize: 44,
     marginTop: 20,
     marginBottom: 20,
+    fontWeight: 'bold',
+    color: '#333', // Cor escura para título
   },
   input: {
     width: 272,
-    height: 40,
+    height: 45,
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 12,
     padding: 10,
     textAlign: "left",
-    marginBottom: 10,
+    marginBottom: 15,
     borderColor: "#D9D9D9",
+    backgroundColor: "#f5f5f5", // Fundo leve no input
   },
   SignInButton: {
     width: 272,
-    backgroundColor: "#000000",
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: "#000", // Fundo preto para o botão
+    padding: 12,
+    borderRadius: 30,
     alignItems: "center",
-    margin: 10,
+    marginVertical: 20,
+    elevation: 5, // Adiciona sombra para o botão
   },
   SignInButtonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   text: {
     width: 272,
     textAlign: "left",
     marginBottom: 5,
+    fontSize: 16,
+    color: "#333",
   },
   container: {
     flex: 1,
     alignItems: "center",
+    padding: 20,
+    backgroundColor: "#f5f5f5", // Fundo claro para a tela
   },
   response: {
     width: 272,
     textAlign: "left",
-    marginBottom: 5,
+    marginTop: 10,
     fontSize: 16,
-    color: "red",
+    color: "red", // Alerta de erro em vermelho
   },
   criarCadastroText: {
-    fontSize: 15,
+    fontSize: 16,
     textDecorationLine: "underline",
-    color: "#0000FF",
+    color: "#008000", // Verde neon para o link
+    marginTop: 10,
   },
 });
