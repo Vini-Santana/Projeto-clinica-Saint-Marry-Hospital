@@ -5,34 +5,19 @@ import { useRouter } from "expo-router";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [perfilDeAcesso, setPerfilDeAcesso] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const router = useRouter();
 
-  const createUsuario = async () => {
-    try {
-      const response = await fetch(`http://172.19.12.87:8080/login/createUsuario?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await response.json();
-      setResponseMessage(data.code === 1 ? "Cadastro efetuado com sucesso" : data.message);
-    } catch (error) {
-      setResponseMessage("Erro ao conectar ao serviço: " + (error instanceof Error ? error.message : "Erro desconhecido"));
-    }
-  };
 
   const validaLogin = async () => {
     try {
-      const response = await fetch(`http://172.19.12.87:8080/login/validaLogin?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`, {
+      const response = await fetch(`http://192.168.15.7:8080/usuario/validaUsuario?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
       });
-
       const data = await response.json();
       if (data.code === 1) {
         setResponseMessage("Login efetuado com sucesso");
@@ -71,7 +56,7 @@ export default function Login() {
         <Text style={styles.SignInButtonText}>Entrar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={createUsuario}>
+      <TouchableOpacity onPress={() => router.push('/cadastro')}>
         <Text style={styles.criarCadastroText}>Criar cadastro</Text>
       </TouchableOpacity>
 
