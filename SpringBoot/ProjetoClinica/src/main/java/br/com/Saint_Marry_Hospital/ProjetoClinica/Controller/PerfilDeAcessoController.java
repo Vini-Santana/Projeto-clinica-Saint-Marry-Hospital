@@ -1,9 +1,7 @@
 package br.com.Saint_Marry_Hospital.ProjetoClinica.Controller;
 
 import br.com.Saint_Marry_Hospital.ProjetoClinica.ApiResponse;
-import br.com.Saint_Marry_Hospital.ProjetoClinica.Entities.Paciente;
 import br.com.Saint_Marry_Hospital.ProjetoClinica.Entities.PerfilDeAcesso;
-import br.com.Saint_Marry_Hospital.ProjetoClinica.Entities.Telefone;
 import br.com.Saint_Marry_Hospital.ProjetoClinica.Repository.PerfilDeAcessoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -84,7 +84,7 @@ export default function Cadastro() {
         <Text style={styles.response}>{responseMessage}</Text>
       ) : null}
 
-      <TouchableOpacity style={styles.button} onPress={() => router.push('/login')}>
+      <TouchableOpacity style={styles.voltarButton} onPress={() => router.push('/login')}>
         <Text style={styles.buttonText}>Voltar</Text>
       </TouchableOpacity>
     </View>
@@ -141,6 +141,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
+  },
+  voltarButton: {
+    width: '100%',
+    height: 40,
+    backgroundColor: '#000',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    backgroundColor: '#008000',
   },
   buttonText: {
     color: '#fff',

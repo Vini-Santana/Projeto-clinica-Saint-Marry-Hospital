@@ -1,10 +1,7 @@
 package br.com.Saint_Marry_Hospital.ProjetoClinica.Entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
-import java.time.LocalDateTime;
 
 @Entity
 public class Consulta {
@@ -14,24 +11,24 @@ public class Consulta {
     @SequenceGenerator(name = "consulta_seq", allocationSize = 1)
     private Integer idConsulta;
 
-    @NotNull
-    @Column(unique = true)
-    private LocalDateTime horario;
+    @ManyToOne
+    @JoinColumn(name = "fk_idHorario", nullable = false)
+    private Horario horario;
 
     @ManyToOne
     @JoinColumn(name = "fk_idPaciente", nullable = false)
     private Paciente paciente;
 
     @ManyToOne
-    @JoinColumn(name = "fk_idMedico", nullable = false)
-    private Medico medico;
+    @JoinColumn(name = "fk_idEspecialidade", nullable = false)
+    private Especialidade especialidade;
 
     public Consulta() {}
 
-    public Consulta(LocalDateTime horario, Paciente paciente, Medico medico) {
+    public Consulta(Horario horario, Paciente paciente, Especialidade especialidade) {
         this.horario = horario;
         this.paciente = paciente;
-        this.medico = medico;
+        this.especialidade = especialidade;
     }
 
     public Integer getIdConsulta() {
@@ -42,11 +39,11 @@ public class Consulta {
         this.idConsulta = idConsulta;
     }
 
-    public @NotNull LocalDateTime getHorario() {
+    public @NotNull Horario getHorario() {
         return horario;
     }
 
-    public void setHorario(@NotNull LocalDateTime horario) {
+    public void setHorario(@NotNull Horario horario) {
         this.horario = horario;
     }
 
@@ -58,11 +55,11 @@ public class Consulta {
         this.paciente = paciente;
     }
 
-    public Medico getMedico() {
-        return medico;
+    public Especialidade getEspecialidade() {
+        return especialidade;
     }
 
-    public void setMedico(Medico medico) {
-        this.medico = medico;
+    public void setEspecialidade(Especialidade especialidade) {
+        this.especialidade = especialidade;
     }
 }
